@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Taco Cloud</title>
+<title>Mi Taco Online Shop</title>
 <link rel="stylesheet" th:href="@{/taco.css}" />
 </head>
 
@@ -12,7 +12,7 @@
 		<h1>Diseña tu taco!</h1>
 		<img th:src="@{/images/taco.png}" />
 		<div class="element">
-			<a th:href="@{/home}" id="another">¡Volver al home!</a>
+			<a th:href="@{/}" id="another">¡Volver al home!</a>
 		</div>
 
 		<form method="POST" th:object="${tktn}">
