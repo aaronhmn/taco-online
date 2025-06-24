@@ -30,6 +30,12 @@ span.validationError {
 	color: red;
 }
 
+.container {
+	display: flex;
+	justify-content: center;
+	align-content: center;
+}
+
 .center {
 	display: inline-block; 
 	height: auto;
@@ -38,6 +44,7 @@ span.validationError {
 	width: 80%;
 	border: 3px solid green;
 	padding: 10px;
+	border-radius: 15px;
 }
 
 

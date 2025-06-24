@@ -7,13 +7,16 @@
 <link rel="stylesheet" th:href="@{/taco.css}" />
 </head>
 <body>
+<div class="container">
 	<div class="center">
 		<h1>Bienvenido a...</h1>
-		<img th:src="@{/images/taco.png}" />
-		
-					<div class="element">
-				<a th:href="@{/design}" id="another">¡Ir a diseñar mi Taco!</a>
-			</div>
+		<img th:src="@{/images/taco.png}"  alt="Imágen del taco"/>
+
+		<div class="element">
+			<a th:href="@{/design}" id="another">¡Ir a diseñar mi Taco!</a>
+		</div>
 	</div>
+</div>
+
 </body>
 </html>
