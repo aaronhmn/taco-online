@@ -4,6 +4,7 @@ import com.ahmn.tacoonline.data.IngredientRepository;
 import com.ahmn.tacoonline.data.TacoRepository;
 import com.ahmn.tacoonline.model.Ingredient;
 import com.ahmn.tacoonline.model.Ingredient.Type;
+import com.ahmn.tacoonline.model.Order;
 import com.ahmn.tacoonline.model.Taco;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -11,10 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.ArrayList;
@@ -26,6 +24,7 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/design")
 @RequiredArgsConstructor
+@SessionAttributes("order")
 public class DesignTacoController {
 
     final IngredientRepository ingredientRepository;
@@ -44,6 +43,11 @@ public class DesignTacoController {
         return new Taco();
     }
 
+    @ModelAttribute()
+    public Order order() {
+        return new Order();
+    }
+
     private List<Ingredient> filterByType(List<Ingredient> ingredients, Type type) {
         return ingredients
                 .stream()
@@ -52,12 +56,13 @@ public class DesignTacoController {
     }
 
     @PostMapping
-    public String processDesign(@Valid @ModelAttribute(name = "tktn") Taco design, Errors errors, Model model) {
+    public String processDesign(@Valid @ModelAttribute(name = "tktn") Taco design, Errors errors, Model model, @ModelAttribute Order order) {
         if (errors.hasErrors()) {
             fillModelWithIngredients(model);
             return "design";
         }
         Taco saved = tacoRepository.save(design);
+        order.addDesign(saved);
         log.info("Processing Design Taco: {}", saved);
         return "redirect:/orders/current";
     }
