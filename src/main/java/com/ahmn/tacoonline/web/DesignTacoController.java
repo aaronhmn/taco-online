@@ -1,6 +1,7 @@
 package com.ahmn.tacoonline.web;
 
 import com.ahmn.tacoonline.data.IngredientRepository;
+import com.ahmn.tacoonline.data.TacoRepository;
 import com.ahmn.tacoonline.model.Ingredient;
 import com.ahmn.tacoonline.model.Ingredient.Type;
 import com.ahmn.tacoonline.model.Taco;
@@ -28,6 +29,7 @@ import java.util.stream.Collectors;
 public class DesignTacoController {
 
     final IngredientRepository ingredientRepository;
+    final TacoRepository tacoRepository;
 
     @GetMapping
     public String showDesignForm(Model model) {
@@ -55,7 +57,8 @@ public class DesignTacoController {
             fillModelWithIngredients(model);
             return "design";
         }
-        log.info("Processing Design Taco: {}", design);
+        Taco saved = tacoRepository.save(design);
+        log.info("Processing Design Taco: {}", saved);
         return "redirect:/orders/current";
     }
 
