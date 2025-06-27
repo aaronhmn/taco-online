@@ -28,17 +28,17 @@ import java.util.stream.Collectors;
 public class DesignTacoController {
 
     final IngredientRepository ingredientRepository;
+
     final TacoRepository tacoRepository;
 
     @GetMapping
     public String showDesignForm(Model model) {
-
-        int x = 0;
-        int y = 1/x;
+//        int x = 0;
+//        int y = 1/x;
 
         fillModelWithIngredients(model);
-        //model.addAttribute("tktn", new Taco() );
 
+        //model.addAttribute("tktn", new Taco());
         return "design";
     }
 
@@ -47,7 +47,7 @@ public class DesignTacoController {
         return new Taco();
     }
 
-    @ModelAttribute()
+    @ModelAttribute
     public Order order() {
         return new Order();
     }
@@ -59,12 +59,14 @@ public class DesignTacoController {
                 .collect(Collectors.toList());
     }
 
+
     @PostMapping
     public String processDesign(@Valid @ModelAttribute(name = "tktn") Taco design, Errors errors, Model model, @ModelAttribute Order order) {
         if (errors.hasErrors()) {
             fillModelWithIngredients(model);
             return "design";
         }
+
         Taco saved = tacoRepository.save(design);
         order.addDesign(saved);
         log.info("Processing Design Taco: {}", saved);
@@ -75,7 +77,9 @@ public class DesignTacoController {
         List<Ingredient> ingredients = new ArrayList<>();
 
         ingredientRepository.findAll().forEach(i -> ingredients.add(i));
-                                    //forEach(ingredients::add)
+
+        //.forEach(ingredients::add);
+
 
 //        List<Ingredient> ingredients = Arrays.asList(
 //                new Ingredient("FLTO", "Flour Tortilla", Type.WRAP),
@@ -88,11 +92,11 @@ public class DesignTacoController {
 //                new Ingredient("JACK", "Monterrey Jack", Type.CHEESE),
 //                new Ingredient("SLSA", "Salsa", Type.SAUCE),
 //                new Ingredient("SRCR", "Sour Cream", Type.SAUCE)
+//
 //        );
 
-        Type[] types = Type.values();
-
-        for(Type type : types) {
+        Type[] types = Ingredient.Type.values();
+        for (Type type : types) {
             model.addAttribute(type.toString().toLowerCase(), filterByType(ingredients, type));
         }
     }

@@ -31,7 +31,7 @@ public class OrderController {
 
     @PostMapping
     public String processOrder(@Valid Order order, Errors errors, SessionStatus status) {
-        if (errors.hasErrors()) {
+        if(errors.hasErrors()) {
             return "orderForm";
         }
         Order saved = orderRepository.save(order);

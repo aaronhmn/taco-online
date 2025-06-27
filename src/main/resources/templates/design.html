@@ -21,6 +21,7 @@
 					  th:if="${#fields.hasErrors('ingredients')}"
 					  th:errors="*{ingredients}">Ingredient Error</span>
 
+
 				<div class="ingredient-group" id="wraps">
 					<h3>Elige la envoltura:</h3>
 					<div th:each="ingredient : ${wrap}">

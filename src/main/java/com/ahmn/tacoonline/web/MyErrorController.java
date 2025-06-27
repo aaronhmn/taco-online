@@ -17,18 +17,15 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MyErrorController implements ErrorController {
 
-    final ErrorAttributes errorAttributes;
+    private final ErrorAttributes errorAttributes;
     private final WebRequest webRequest;
 
     @RequestMapping("/error")
     public String handleError(WebRequest request, Model model) {
         log.error("Fallo de la app");
-        Map<String, Object> errorAttributesMap = errorAttributes
-                .getErrorAttributes(webRequest, ErrorAttributeOptions.of(ErrorAttributeOptions.Include.STACK_TRACE, ErrorAttributeOptions.Include.MESSAGE, ErrorAttributeOptions.Include.PATH));
-
+        Map<String, Object> errorAttributesMap = errorAttributes.getErrorAttributes(webRequest, ErrorAttributeOptions.of(ErrorAttributeOptions.Include.STACK_TRACE, ErrorAttributeOptions.Include.PATH, ErrorAttributeOptions.Include.ERROR));
         model.addAttribute("msg", errorAttributesMap.get("error"));
         model.addAttribute("url", errorAttributesMap.get("path"));
-
         return "error";
     }
 }
